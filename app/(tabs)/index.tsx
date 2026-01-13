@@ -1,5 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import "./global.css";
+import '../global.css';
 import {
   FlatList,
   Pressable,
