@@ -3,21 +3,29 @@ import React, { useState } from "react";
 import { Link, router } from "expo-router";
 import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
+import { createUser } from "@/lib/appwrite";
 
 const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [form, setForm] = useState({ name:'', email: "", password: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
 
   const submit = async () => {
-    if (!form.name || !form.email || !form.password)
-      return  Alert.alert("Error", "Please fill all the fields");
+    const { name, email, password } = form;
+
+    if (!name || !email || !password)
+      return Alert.alert("Error", "Please fill all the fields");
 
     setIsSubmitting(true);
 
     try {
       // Call appwrite Sing up Function here
+      await createUser({
+        email,
+        password,
+        name,
+      });
 
-      Alert.alert("Success", "You have signed up successfully");
+      Alert.alert("Success", "Wellcome to FastFood APP ");
       router.replace("/");
     } catch (error: any) {
       Alert.alert("Error", error.message || "Something went wrong");
@@ -54,7 +62,7 @@ const SignUp = () => {
 
       <View className="flex justify-center mt-5 flex-row gap-2">
         <Text className="base-regular text-gray-100">
-          Already have an account?  
+          Already have an account?
         </Text>
         <Link href="/sign-in" className="base-bold text-primary">
           Sign In
