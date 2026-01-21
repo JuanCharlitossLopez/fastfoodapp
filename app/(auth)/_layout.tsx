@@ -15,7 +15,7 @@ import CustomInput from "@/components/CustomInput";
 import CustomButton from "@/components/CustomButton";
 import useAuthStore from "@/store/auth.store";
 
-export default function _Layout() {
+export default function AuthLayout() {
   const isAuthenticated = useAuthStore()
 
   if(isAuthenticated) return <Redirect href="/"/>
