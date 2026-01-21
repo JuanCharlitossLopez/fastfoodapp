@@ -56,7 +56,7 @@ export const signIn = async ({ email, password }: SignInParams) => {
   }
 }
 
-export const getCurrentUser = async (): Promise<User | null> => {
+export const getCurrentUser = async () => {
   try {
     const curretAccount = await account.get()
     if (!curretAccount)
@@ -71,7 +71,7 @@ export const getCurrentUser = async (): Promise<User | null> => {
     if (!currentUser)
       throw Error
 
-    return currentUser.documents[0] as unknown as User
+    return currentUser.documents[0]
   } catch (error) {
     console.log({ error })
     throw new Error(error as string)
