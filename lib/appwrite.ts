@@ -1,4 +1,4 @@
-import { CreateUserParams, SignInParams } from "@/type"
+import { CreateUserParams, SignInParams, User } from "@/type"
 import { Account, Avatars, Client, Databases, ID, Query } from "react-native-appwrite"
 
 export const appwriteConfig = {
@@ -38,7 +38,7 @@ export const createUser = async ({ email, password, name }: CreateUserParams) =>
         accountId: newAccount.$id,
         email, name, avatar: avatarURL
       }
-    ) 
+    )
 
     return newUser
   } catch (error) {
@@ -49,17 +49,17 @@ export const createUser = async ({ email, password, name }: CreateUserParams) =>
 
 export const signIn = async ({ email, password }: SignInParams) => {
   try {
-    const session = await account.createEmailPasswordSession(email, password )
-    
+    const session = await account.createEmailPasswordSession(email, password)
+
   } catch (error) {
     throw new Error(error as string)
   }
 }
 
-export const getCurrentUser = async ({}) => {
+export const getCurrentUser = async () => {
   try {
     const curretAccount = await account.get()
-    if(!curretAccount)
+    if (!curretAccount)
       throw new Error
 
     const currentUser = await databases.listDocuments(
@@ -68,12 +68,12 @@ export const getCurrentUser = async ({}) => {
       [Query.equal('accountId', curretAccount.$id)]
     )
 
-    if(!currentUser)
+    if (!currentUser)
       throw Error
 
     return currentUser.documents[0]
   } catch (error) {
-    console.log({error})
+    console.log({ error })
     throw new Error(error as string)
   }
 }
